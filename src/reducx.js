@@ -31,13 +31,41 @@ function Control(props) {
     )
 }
 
+function TodoItem(propos) {
+  const { todo, toggleTodo, removeTodo } = propos
+  const onChange = () => {
+    toggleTodo(todo.id)
+  }
+  const onRemove = () => {
+    removeTodo(todo.id)
+  }
+  return(
+    <li className='todo-item'>
+      <input type="checkbox" onChange={onChange} checked={todo.complate}/>
+      <label className={todo.complate ? 'complate' : ''}>{todo.text}</label>
+      <button onClick={onRemove}>&#xd7;</button>
+    </li>
+  )
+}
+
 
 function Todos(props) {
-    console.log(props)
     const {removeTodo, toggleTodo, todos } = props;
     return (
-        <div>
-        </div>
+      <ul>
+        {
+          todos.map( todo => {
+            return (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                toggleTodo={toggleTodo}
+                removeTodo={removeTodo}
+              />
+            )
+          })
+        }
+      </ul>
     )
 }
 
@@ -65,7 +93,7 @@ function TodoList() {
     return (
         <div className='todo-list'>
             <Control addTodo={addTodo}></Control>
-            <Todos removeTo={removeTodo} toggleTodo={toggleTodo} todos={todos}></Todos>
+            <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos}></Todos>
         </div>
     )
 }
