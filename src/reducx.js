@@ -68,6 +68,7 @@ function Todos(props) {
       </ul>
     )
 }
+const TODE_KEY = '_todo_key_'
 
 function TodoList() {
     const [todos, setTodos] = useState([])
@@ -90,6 +91,13 @@ function TodoList() {
                 : todo
         }))
     }, [])
+    useEffect(() => {
+      const todos = JSON.parse(localStorage.getItem(TODE_KEY));
+      setTodos(todos)
+    },[])
+    useEffect(()=> {
+      localStorage.setItem(TODE_KEY, JSON.stringify(todos))
+    },[todos])
     return (
         <div className='todo-list'>
             <Control addTodo={addTodo}></Control>
